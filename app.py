@@ -22,14 +22,14 @@ def clientContact():
         c_data = ClientReq(name, email, message, date_time)
         db.session.add(c_data)
         db.session.commit()
-        return {"response": "Dear {} I recived your message.".format(name)}
+        return {"response": "Dear {} I recived your message.".format(name)}, 200
 
 
     elif request.method == "GET":
         all_client_req = ClientReq.query.all()
         req_schema = ClientReqSchema(many=True)
 
-        return jsonify(req_schema.dump(all_client_req))
+        return jsonify(req_schema.dump(all_client_req)), 200
 
 #VIEW FOR CV LOADER
 @app.route('/api/cvloader', methods=['POST', 'GET'])
@@ -48,17 +48,27 @@ def cvloader():
         db.session.add(new_file)
         db.session.commit()
 
-        return {"cv_name": cv.filename}
+        return {"cv_name": cv.filename}, 200
 
     elif request.method == 'GET':
 
         cv = CVStorage.query.first()
 
         if cv == None:
-            return {"existing_cv": 'No CV loaded, click "Browse" button to load it'}
+            return {"existing_cv": 'No CV loaded, click "Browse" button to load it'}, 200
         else:
             file_name = CVStorage.query.first().name
-            return {"existing_cv": file_name}
+            return {"existing_cv": file_name}, 200
+
+@app.route('/api/projects', methods=['POST', 'GET'])
+def projects():
+    if request.method == 'POST':
+        pass
+    elif request.method == 'GET':
+        pass
+
+
+
 
 if __name__ == "__main__":
     app.run(debug=True)

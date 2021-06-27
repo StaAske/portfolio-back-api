@@ -38,3 +38,23 @@ class CVStorage(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(50))
     file = db.Column(db.LargeBinary)
+
+class Projects(db.Model):
+    __tablename__ = 'projects'
+    id = db.Column(db.Integer, primary_key=True)
+    title = db.Column(db.String(200))
+    description = db.Column(db.Text)
+    site_link = db.Column(db.String(500))
+    github_link = db.Column(db.String(500))
+    skills = db.Column(db.String(500))
+    image = db.Column(db.LargeBinary)
+    date_time = db.Column(db.String(200))
+
+    def __init__(self, title, description, site_link, github_link, skills, image, date_time):
+        self.title = title
+        self.description = description
+        self.site_link = site_link
+        self.github_link = github_link
+        self.skills = skills
+        self.image = image
+        self.date_time = date_time
